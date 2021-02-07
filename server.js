@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+import connect from "./lib/mongoose";
 
 require("dotenv").config();
 
@@ -8,6 +9,10 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 app.use(bodyParser.json());
+
+(async () => {
+  await connect();
+})();
 
 const users = [
   {
