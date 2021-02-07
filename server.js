@@ -48,6 +48,30 @@ app.post("/login", (req, res) => {
   }
 });
 
+app.post("/register", (req, res) => {
+  const { username, password } = req.body;
+
+  const userExists = users.find((u) => {
+    return u.username === username;
+  });
+
+  if (!userExists) {
+    //TO DO
+    //Add user to db
+    res.status(200).json({
+      data: {
+        msg: "Successfully registered",
+      },
+    });
+  } else {
+    res.status(401).json({
+      error: {
+        msg: "Username already exists",
+      },
+    });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server listening on port ${PORT}`);
 });
