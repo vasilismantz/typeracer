@@ -1,4 +1,5 @@
 import { User } from "../models";
+import bcrypt from "bcryptjs";
 
 export const register =
   ("/register",
@@ -8,11 +9,12 @@ export const register =
     const userExists = await User.findOne({ username });
 
     if (!userExists) {
+      const hashedPassword = await bcrypt.hash(password, 10);
       try {
         const user = await User.create({
           username,
           email,
-          password,
+          password: hashedPassword,
         });
         res.status(200).json({
           data: {
